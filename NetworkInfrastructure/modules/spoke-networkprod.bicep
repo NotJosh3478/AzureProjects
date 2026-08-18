@@ -1,5 +1,7 @@
 targetScope = 'resourceGroup'
 
+param prodWebNsgId string
+
 
 // Create the production spoke vnet
 resource prodspokevnet 'Microsoft.Network/virtualNetworks@2025-07-01' = {
@@ -13,10 +15,11 @@ resource prodspokevnet 'Microsoft.Network/virtualNetworks@2025-07-01' = {
 // Set the parent: to prodspokevnet so the resource understands where to live
 
 resource prodwebSubNet 'Microsoft.Network/virtualNetworks/subnets@2025-07-01' = {
-  name: 'prodwebsubnet'
+  name: 'prodwebsubnet1'
   parent: prodspokevnet
   properties: {
     addressPrefix: '10.0.1.0/24'
+    networkSecurityGroup: {id: prodWebNsgId}
   }
 }
 
@@ -25,6 +28,7 @@ resource prodweb2SubNet 'Microsoft.Network/virtualNetworks/subnets@2025-07-01' =
   parent: prodspokevnet
   properties: {
     addressPrefix: '10.0.2.0/24'
+    networkSecurityGroup: {id: prodWebNsgId}
   }
 }
 
@@ -33,6 +37,7 @@ resource prodweb3SubNet 'Microsoft.Network/virtualNetworks/subnets@2025-07-01' =
   parent: prodspokevnet
   properties: {
     addressPrefix: '10.0.3.0/24'
+    networkSecurityGroup: {id: prodWebNsgId}
   }
 }
 

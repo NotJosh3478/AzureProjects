@@ -2,6 +2,9 @@ targetScope = 'resourceGroup'
 
 // Create dev virtual network
 
+//
+param devWebNsgId string 
+
 resource devspokevnet 'Microsoft.Network/virtualNetworks@2025-07-01' = {
   name: 'development-spoke-vnet'
   location: resourceGroup().location
@@ -13,10 +16,11 @@ resource devspokevnet 'Microsoft.Network/virtualNetworks@2025-07-01' = {
 // Set the parent: to prodspokevnet so the resource understands where to live
 
 resource devwebSubNet 'Microsoft.Network/virtualNetworks/subnets@2025-07-01' = {
-  name: 'devwebsubnet'
+  name: 'devwebsubnet1'
   parent: devspokevnet
   properties: {
     addressPrefix: '10.1.1.0/24'
+    networkSecurityGroup: {id: devWebNsgId}
   }
 }
 
@@ -25,6 +29,7 @@ resource devweb2SubNet 'Microsoft.Network/virtualNetworks/subnets@2025-07-01' = 
   parent: devspokevnet
   properties: {
     addressPrefix: '10.1.2.0/24'
+    networkSecurityGroup: {id: devWebNsgId}
   }
 }
 
@@ -33,6 +38,7 @@ resource devweb3SubNet 'Microsoft.Network/virtualNetworks/subnets@2025-07-01' = 
   parent: devspokevnet
   properties: {
     addressPrefix: '10.1.3.0/24'
+    networkSecurityGroup: {id: devWebNsgId}
   }
 }
 
