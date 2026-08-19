@@ -4,7 +4,6 @@ You can help us improve the accuracy of the result by opening an issue here: htt
 Resource and property changes are indicated with these symbols:
   + Create
   ! Deploy
-  * Ignore
 
 The deployment will update the following scopes:
 
@@ -17,12 +16,11 @@ Scope: /subscriptions/<subscription-id>
 Scope: /subscriptions/<subscription-id>/resourceGroups/development-resourcegroup
 
   + Microsoft.Network/networkSecurityGroups/development-web-nsg
-  + Microsoft.Network/virtualNetworks/production-spoke-vnet
-  + Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/devwebsubnet1
-  + Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/devwebsubnet2
-  + Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/devwebsubnet3
-  + Microsoft.Network/virtualNetworks/production-spoke-vnet/virtualNetworkPeerings/dev-to-hub
-  * Microsoft.Network/virtualNetworks/development-spoke-vnet
+  + Microsoft.Network/virtualNetworks/development-spoke-vnet/subnets/devwebsubnet1
+  + Microsoft.Network/virtualNetworks/development-spoke-vnet/virtualNetworkPeerings/dev-to-hub
+  ! Microsoft.Network/virtualNetworks/development-spoke-vnet
+  ! Microsoft.Network/virtualNetworks/development-spoke-vnet/subnets/devwebsubnet2
+  ! Microsoft.Network/virtualNetworks/development-spoke-vnet/subnets/devwebsubnet3
 
 Scope: /subscriptions/<subscription-id>/resourceGroups/hubnetwork-resourcegroup
 
@@ -45,4 +43,4 @@ Scope: /subscriptions/<subscription-id>/resourceGroups/production-resourcegroup
   ! Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/prodwebsubnet2
   ! Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/prodwebsubnet3
 
-Resource changes: 19 to create, 5 to deploy, 1 to ignore.
+Resource changes: 16 to create, 8 to deploy.
