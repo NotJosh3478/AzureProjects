@@ -64,7 +64,7 @@ module prodWebNsg './modules/nsgs.bicep' = {
 }
 
 // Create NSGs
-module devdWebNsg './modules/nsgs.bicep' = {
+module devWebNsg './modules/nsgs.bicep' = {
   name: 'deploy-development-web-nsg'
   scope: developmentresourcegroup
   params: {
@@ -102,7 +102,7 @@ module prodspokenetwork './modules/spoke-networkprod.bicep' = {
 module devspokenetwork 'modules/spoke-networkdev.bicep' = {
   name: 'deploy-development-spoke-network'
   scope: developmentresourcegroup
-  params: {devWebNsgId: devdWebNsg.outputs.nsgId}
+  params: {devWebNsgId: devWebNsg.outputs.nsgId}
 }
 // Create hub network and subnets
 module hubnetwork 'modules/hub-network.bicep' = {
