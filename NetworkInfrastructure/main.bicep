@@ -123,7 +123,7 @@ module devSpokeNetwork 'modules/spoke-network.bicep' = {
   name: 'deploy-development-spoke-network'
   scope: developmentresourcegroup
   params: {
-    vnetName: 'production-spoke-vnet'
+    vnetName: 'development-spoke-vnet'
     addressPrefixes: ['10.1.0.0/16']  
     subnets: [
       {
@@ -139,7 +139,7 @@ module devSpokeNetwork 'modules/spoke-network.bicep' = {
         addressPrefix: '10.1.3.0/24'
       }
     ]
-    nsgId: prodWebNsg.outputs.nsgId
+    nsgId: devWebNsg.outputs.nsgId
     tags: union(commonTags, {environment: 'development'})
   }
 }
@@ -227,3 +227,4 @@ module hubVpnGateway 'modules/gateway.bicep' = if (deployVPNGateway) {
     gatewaySKU: 'VpnGw1AZ'
   }
 }
+ 
