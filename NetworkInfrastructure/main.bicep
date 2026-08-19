@@ -92,19 +92,61 @@ module devWebNsg './modules/nsgs.bicep' = {
 
 
 
-// Create production spoke network and subnets
-module prodspokenetwork './modules/spoke-networkprod.bicep' = {
+// Create Prod network and subnets
+module prodSpokeNetwork 'modules/spoke-network.bicep' = {
   name: 'deploy-production-spoke-network'
   scope: productionresourcegroup
-  params: {prodWebNsgId: prodWebNsg.outputs.nsgId}
+  params: {
+    vnetName: 'production-spoke-vnet'
+    addressPrefixes: ['10.0.0.0/16']  
+    subnets: [
+      {
+        name: 'prodwebsubnet1'
+        addressPrefix: '10.0.1.0/24'
+      }
+      {
+        name: 'prodwebsubnet2'
+        addressPrefix: '10.0.2.0/24'
+      }
+      {
+        name: 'prodwebsubnet3'
+        addressPrefix: '10.0.3.0/24'
+      }
+    ]
+    nsgId: prodWebNsg.outputs.nsgId
+    tags: union(commonTags, {environment: 'production'})
+  }
 }
-// Create development spoke network and subnets
-module devspokenetwork 'modules/spoke-networkdev.bicep' = {
+
+// Create Dev network and subnets
+module devSpokeNetwork 'modules/spoke-network.bicep' = {
   name: 'deploy-development-spoke-network'
   scope: developmentresourcegroup
-  params: {devWebNsgId: devWebNsg.outputs.nsgId}
+  params: {
+    vnetName: 'production-spoke-vnet'
+    addressPrefixes: ['10.1.0.0/16']  
+    subnets: [
+      {
+        name: 'devwebsubnet1'
+        addressPrefix: '10.1.1.0/24'
+      }
+      {
+        name: 'devwebsubnet2'
+        addressPrefix: '10.1.2.0/24'
+      }
+      {
+        name: 'devwebsubnet3'
+        addressPrefix: '10.1.3.0/24'
+      }
+    ]
+    nsgId: prodWebNsg.outputs.nsgId
+    tags: union(commonTags, {environment: 'development'})
+  }
 }
-// Create hub network and subnets
+
+
+
+// Create Hub network and subnets
 module hubnetwork 'modules/hub-network.bicep' = {
   name: 'deploy-hub-network'
   scope: hubnetworkresourcegroup
@@ -116,7 +158,7 @@ module hubToProdPeering 'modules/vnet-peering.bicep' = {
   scope: hubnetworkresourcegroup
   params: {
     localVnetName: hubnetwork.outputs.hubVnetName
-    remoteVnetId: prodspokenetwork.outputs.prodVnetId
+    remoteVnetId: prodSpokeNetwork.outputs.vnetId
     peeringName: 'hub-to-production'
     allowGatewayTransit: deployVPNGateway
     useRemoteGateways: false
@@ -131,7 +173,7 @@ module prodToHubPeering 'modules/vnet-peering.bicep' = {
   name: 'peer-production-to-hub'
   scope: productionresourcegroup
   params: {
-    localVnetName: prodspokenetwork.outputs.prodVnetName
+    localVnetName: prodSpokeNetwork.outputs.vnetName
     remoteVnetId: hubnetwork.outputs.hubVnetId
     peeringName: 'production-to-hub'
     allowGatewayTransit: false
@@ -148,7 +190,7 @@ module hubToDevPeering 'modules/vnet-peering.bicep' = {
   scope: hubnetworkresourcegroup
   params: {
     localVnetName: hubnetwork.outputs.hubVnetName
-    remoteVnetId: devspokenetwork.outputs.devVnetId
+    remoteVnetId: devSpokeNetwork.outputs.vnetId
     peeringName: 'hub-to-development'
     allowGatewayTransit: deployVPNGateway
     useRemoteGateways: false
@@ -163,7 +205,7 @@ module devToHubPeering 'modules/vnet-peering.bicep' = {
   name: 'peer-dev-to-hub'
   scope: developmentresourcegroup
   params: {
-    localVnetName: devspokenetwork.outputs.devVnetName
+    localVnetName: devSpokeNetwork.outputs.vnetName
     remoteVnetId: hubnetwork.outputs.hubVnetId
     peeringName: 'dev-to-hub'
     allowGatewayTransit: false
