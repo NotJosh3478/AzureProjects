@@ -1,0 +1,48 @@
+Note: The result may contain false positive predictions (noise).
+You can help us improve the accuracy of the result by opening an issue here: https://aka.ms/WhatIfIssues
+
+Resource and property changes are indicated with these symbols:
+  + Create
+  ! Deploy
+  * Ignore
+
+The deployment will update the following scopes:
+
+Scope: /subscriptions/<subscription-id>
+
+  + resourceGroups/hubnetwork-resourcegroup
+  ! resourceGroups/development-resourcegroup
+  ! resourceGroups/production-resourcegroup
+
+Scope: /subscriptions/<subscription-id>/resourceGroups/development-resourcegroup
+
+  + Microsoft.Network/networkSecurityGroups/development-web-nsg
+  + Microsoft.Network/virtualNetworks/production-spoke-vnet
+  + Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/devwebsubnet1
+  + Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/devwebsubnet2
+  + Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/devwebsubnet3
+  + Microsoft.Network/virtualNetworks/production-spoke-vnet/virtualNetworkPeerings/dev-to-hub
+  * Microsoft.Network/virtualNetworks/development-spoke-vnet
+
+Scope: /subscriptions/<subscription-id>/resourceGroups/hubnetwork-resourcegroup
+
+  + Microsoft.Network/publicIPAddresses/hub-vpn-gateway-pip
+  + Microsoft.Network/virtualNetworkGateways/hub-vpn-gateway
+  + Microsoft.Network/virtualNetworks/hub-virtual-network
+  + Microsoft.Network/virtualNetworks/hub-virtual-network/subnets/AzureBastionSubnet
+  + Microsoft.Network/virtualNetworks/hub-virtual-network/subnets/AzureFirewallSubnet
+  + Microsoft.Network/virtualNetworks/hub-virtual-network/subnets/GatewaySubnet
+  + Microsoft.Network/virtualNetworks/hub-virtual-network/subnets/shared-services-subnet
+  + Microsoft.Network/virtualNetworks/hub-virtual-network/virtualNetworkPeerings/hub-to-development
+  + Microsoft.Network/virtualNetworks/hub-virtual-network/virtualNetworkPeerings/hub-to-production
+
+Scope: /subscriptions/<subscription-id>/resourceGroups/production-resourcegroup
+
+  + Microsoft.Network/networkSecurityGroups/production-web-nsg
+  + Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/prodwebsubnet1
+  + Microsoft.Network/virtualNetworks/production-spoke-vnet/virtualNetworkPeerings/production-to-hub
+  ! Microsoft.Network/virtualNetworks/production-spoke-vnet
+  ! Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/prodwebsubnet2
+  ! Microsoft.Network/virtualNetworks/production-spoke-vnet/subnets/prodwebsubnet3
+
+Resource changes: 19 to create, 5 to deploy, 1 to ignore.
