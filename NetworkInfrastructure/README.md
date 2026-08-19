@@ -18,7 +18,7 @@ The deployment creates:
 - Optionally, a route-based Azure VPN gateway and Standard public IP in the hub
 - Gateway transit from the optional hub gateway to both spokes
 
-The two spokes are not directly peered. This template also does not deploy Azure Firewall, Azure Bastion, workloads, route tables, DNS resources, or an on-premises VPN connection.
+The two spokes are not directly peered. This template also does not deploy Azure Firewall, Azure Bastion, workloads, route tables, DNS resources, or an on-premises VPN connection. 
 
 ## Address space
 
@@ -39,8 +39,7 @@ Each spoke NSG allows inbound TCP/443 traffic from the Azure `Internet` service 
 |   |-- gateway.bicep                # Optional VPN gateway and public IP
 |   |-- hub-network.bicep            # Hub VNet and subnets
 |   |-- nsgs.bicep                   # Reusable network security group
-|   |-- spoke-networkdev.bicep       # Development spoke
-|   |-- spoke-networkprod.bicep      # Production spoke
+|   |-- spoke-network.bicep          # Production and Development spoke
 |   `-- vnet-peering.bicep           # Reusable one-way peering
 |-- topology.jpg
 `-- README.md
