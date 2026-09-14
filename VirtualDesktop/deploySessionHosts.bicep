@@ -16,6 +16,10 @@ var sessionHostSubnetName = '${prefix}-snet-${environment}-sessionhosts'
 var hostPoolName = '${prefix}-hp-${environment}'
 var sessionHostsName = '${prefix}-shosts-${environment}'
 
+param exactVersion string = '26100.9445.260908'
+param vmSizeId string = 'Standard_D2as_v6'
+param storageType string = 'StandardSSD_LRS'
+
 resource avdResourceGroup 'Microsoft.Resources/resourceGroups@2025-04-01' existing = {
   name: rgName
 }
@@ -38,6 +42,9 @@ module sessionHosts 'modules/sessionHost.bicep' = {
     subnetId: existingSessionHostSubnet.id
     environment: environment
     prefix: prefix
+    exactVersion: exactVersion
+    vmSizeId: vmSizeId
+    storageType: storageType
     adminUsernameSecretUri: adminUsernameSecretUri
     adminPasswordSecretUri: adminPasswordSecretUri
   }

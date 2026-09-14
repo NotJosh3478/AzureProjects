@@ -4,9 +4,9 @@ param subnetId string
 param environment string
 param prefix string
 
-
-@description('Set the admin username and password')
+@secure()
 param adminUsernameSecretUri string
+@secure()
 param adminPasswordSecretUri string
 
 param vdiHostPoolName string
@@ -16,6 +16,9 @@ param vdiHostPoolName string
   1, 2, 3, 4
 ])
 param sessionHostCount int = 1
+param exactVersion string
+param vmSizeId string
+param storageType string
 
 // Output created from hostPool.bicep to connect the sessions to the host pool
 resource hostpoolref 'Microsoft.DesktopVirtualization/hostPools@2025-10-10' existing = {
@@ -26,7 +29,7 @@ resource sessionHosts 'Microsoft.DesktopVirtualization/hostPools/sessionHostConf
   name: 'default'
   parent: hostpoolref
   properties: {
-    diskInfo: {managedDisk: {type: 'StandardSSD_LRS'}}
+    diskInfo: {managedDisk: {type: storageType}}
     domainInfo: {
       joinType: 'AzureActiveDirectory'
     }
@@ -35,7 +38,7 @@ resource sessionHosts 'Microsoft.DesktopVirtualization/hostPools/sessionHostConf
       // Marketplace image definitions require publisher, offer, and sku
       marketplaceInfo: {
         sku: 'win11-24H2-avd'
-        exactVersion: '26100.9445.260908'
+        exactVersion: exactVersion
         offer: 'Windows-11'
         publisher: 'MicrosoftWindowsDesktop'
       }
@@ -49,7 +52,7 @@ resource sessionHosts 'Microsoft.DesktopVirtualization/hostPools/sessionHostConf
     }
     vmNamePrefix: '${prefix}sh${environment}'
     //2 vCPUs 8 GiB RAM
-    vmSizeId: 'Standard_D2as_v6'
+    vmSizeId: vmSizeId
   }
 }
 
