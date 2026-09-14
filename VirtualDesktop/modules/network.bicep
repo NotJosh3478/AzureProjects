@@ -22,6 +22,7 @@ resource vdiNetwork 'Microsoft.Network/virtualNetworks@2025-09-01' = {
   }
 }
 
+@batchSize(1)
 resource vdiNetworkSubnets 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = [for (subnet, index) in subnets: {
   parent: vdiNetwork
   name: subnet.name
