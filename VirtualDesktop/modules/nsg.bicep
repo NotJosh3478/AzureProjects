@@ -13,7 +13,6 @@ type securityRuleConfiguration = {
   sourcePortRange: string
   destinationAddressPrefix: string
   destinationPortRange: string
-  sourceAddress: string
 }
 
 param securityRules securityRuleConfiguration[] = []
