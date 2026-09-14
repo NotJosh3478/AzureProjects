@@ -262,7 +262,7 @@ module keyVaultRoleAssignment 'modules/keyVaultRoleAssignment.bicep' = {
   scope: azVirtualDesktopRG
   name: kVRbacName
   params: {
-    hostPoolName: hostPoolName // REMOVE HOSTPOOL FROM KEYVAULTROLEASSIGNMENT AND ROLEASSIGNMENT DURING ACTUAL DEPLOYMENT
+    hostPoolName: hostPoolName
     keyVaultName: keyVaultName
     principalId: vdiHostPool.outputs.hostPoolPrincipalId
   }
@@ -277,7 +277,7 @@ module hostPoolVmRoleAssignment 'modules/roleAssignment.bicep' = {
   name: '${prefix}-vm-rbac-${environment}'
 
   params: {
-    hostPoolName: hostPoolName // REMOVE HOSTPOOL FROM KEYVAULTROLEASSIGNMENT AND ROLEASSIGNMENT DURING ACTUAL DEPLOYMENT
+    hostPoolName: hostPoolName
     principalId: vdiHostPool.outputs.hostPoolPrincipalId
   }
 }

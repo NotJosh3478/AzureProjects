@@ -13,7 +13,6 @@ resource vmContributorAssignment 'Microsoft.Authorization/roleAssignments@2022-0
     resourceGroup().id,
     hostPoolName,
     desktopVirtualizationVmContributorRoleId
-    //Remove hostPoolName and replace with principalId during actual deployment
   )
 
   properties: {
